@@ -1,0 +1,33 @@
+# Howto use this file:
+#   systemd service file. On the raspberry pi, copy to /etc/systemd/system/eyestream.service
+#   then run "systemctl daemon-reload" to get systemd to notice the new file
+#   then run "systemctl enable eyestream" to make it auto-start after a reboot
+#   then, optionally run "systemctl start eyestream" to start it now.
+#
+# Description:
+#   this is the eyestream.service file on the raspberry pi.
+#   nominally it's for a sony III eye, but should work on any usb camera
+#   it launches a gstreamer video stream across the wifi network
+#   Rev 1.0, 31Dec2020, andrewgray1965@gmail.com
+#
+[Unit]
+Description=Sony Eye video gstreamer (eyestream)
+After=network-online.target
+Wants=network-online.target
+
+# get the port (GST_PORT) and (my raspberry pi) ip (GST_IP) from the env variables.
+# start the service, if it fails, sleep 10 and restart
+# if you edit this file then, `systemctl daemon-reload` to use changes.
+
+[Service]
+Environment=GST_IP=192.168.1.122
+Environment=GST_PORT=4321
+Environment=GST_QUEUE=16777216
+#
+ExecStart=/usr/bin/gst-launch-1.0 -e v4l2src device=/dev/video0 ! videoconvert ! clockoverlay font-desc='Sans, 20' ! omxh264enc ! h264parse ! queue max-size-bytes=${GST_QUEUE} ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host=${GST_IP} port=${GST_PORT}
+#
+Restart=always
+ExecStartPost=/bin/sleep 10
+
+[Install]
+WantedBy=multi-user.target
