@@ -1,0 +1,29 @@
+# this is a list of gstreamer pkgs install on mu ubuntu workstation.
+
+xxxxx@xxxxx:~/pii/wks$ apt list | grep installed | grep gstream
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+gir1.2-gstreamer-1.0/focal,now 1.16.2-2 amd64 [installed]
+gstreamer1.0-alsa/focal,now 1.16.2-4 amd64 [installed]
+gstreamer1.0-clutter-3.0/focal,now 3.0.27-1 amd64 [installed,automatic]
+gstreamer1.0-gl/focal,now 1.16.2-4 amd64 [installed,automatic]
+gstreamer1.0-gtk3/focal,now 1.16.2-1ubuntu2 amd64 [installed,automatic]
+gstreamer1.0-libav/focal,now 1.16.2-2 amd64 [installed]
+gstreamer1.0-nice/focal,now 0.1.16-1 amd64 [installed]
+gstreamer1.0-packagekit/focal-updates,focal-security,now 1.1.13-2ubuntu1.1 amd64 [installed,automatic]
+gstreamer1.0-plugins-bad/focal,now 1.16.2-2.1ubuntu1 amd64 [installed]
+gstreamer1.0-plugins-base-apps/focal,now 1.16.2-4 amd64 [installed]
+gstreamer1.0-plugins-base/focal,now 1.16.2-4 amd64 [installed]
+gstreamer1.0-plugins-good/focal,now 1.16.2-1ubuntu2 amd64 [installed]
+gstreamer1.0-plugins-ugly/focal,now 1.16.2-2build1 amd64 [installed]
+gstreamer1.0-pulseaudio/focal,now 1.16.2-1ubuntu2 amd64 [installed]
+gstreamer1.0-tools/focal,now 1.16.2-2 amd64 [installed]
+gstreamer1.0-vaapi/focal,now 1.16.2-2 amd64 [installed,automatic]
+gstreamer1.0-x/focal,now 1.16.2-4 amd64 [installed]
+libgstreamer-gl1.0-0/focal,now 1.16.2-4 amd64 [installed,automatic]
+libgstreamer-plugins-bad1.0-0/focal,now 1.16.2-2.1ubuntu1 amd64 [installed,automatic]
+libgstreamer-plugins-base1.0-0/focal,now 1.16.2-4 amd64 [installed]
+libgstreamer-plugins-good1.0-0/focal,now 1.16.2-1ubuntu2 amd64 [installed]
+libgstreamer1.0-0/focal,now 1.16.2-2 amd64 [installed]
+libreoffice-avmedia-backend-gstreamer/focal-updates,now 1:6.4.6-0ubuntu0.20.04.1 amd64 [installed]
