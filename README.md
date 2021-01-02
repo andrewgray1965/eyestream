@@ -2,9 +2,9 @@
 Raspberry Pi + Sony PS3 Eye video GStreamer.
 
 Hardware Requirements:
-  rasberry pi 3 or 3+, and power supply.
-  a USB camera (Sony PS3 Eye)
-  workstation to view output.
+  1. rasberry pi 3 or 3+, and power supply.
+  2. a USB camera (Sony PS3 Eye)
+  3. workstation to view output.
 
 This code will run a video stream from a raspberry pi with a USB camera installed over networks.
 It was tested with a Sony PS3 Eye, hence the service name eyestream. It should work with any 
