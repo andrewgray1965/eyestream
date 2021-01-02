@@ -1,0 +1,20 @@
+# in here, we want to code the shutdown of various (unused) pi components
+# like bluetooth, hdmi screen etc
+
+# next bit takes effect after the next reboot.
+if [[ `grep dtoverlay=pi3-disable-bt /boot/config.txt` == '' ]]; then 
+  systemctl disable bluetooth
+	echo '# turn off bluetooth to save power' 	>> /boot/config.txt
+	echo 'dtoverlay=pi3-disable-bt' 			>> /boot/config.txt;	# turn off bluetooth
+fi;
+
+# next bit takes effect after the next reboot.
+if [[ `grep dtparam=act_led_trigger /boot/config.txt` == '' ]]; then 
+	echo '# turn off LEDS to save power' 		>> /boot/config.txt
+	echo 'dtparam=act_led_trigger=none' 		>> /boot/config.txt;	# turn off LED's
+fi;
+
+# add this code to the /etc/rc.local file to save power if running off battery.
+# just before the exit 0 line.
+sleep 180; # wait 3 mins in case we need to login to the screen to fix stuff
+/opt/vc/bin/tvservice -o;	# turn off hdmi
