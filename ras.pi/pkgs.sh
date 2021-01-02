@@ -6,6 +6,7 @@
 # raspberry pi before it can successfully complete. It is safe to re-run.
 #
 # tested against
+#   2020-08-20-raspios-buster-armhf-lite.img
 #   Raspbian GNU/Linux 10 (buster), 
 #   kernel 5.4.79-v7+ #1373 SMP Mon Nov 23 13:22:33 GMT 2020 armv7l GNU/Linux
 #
