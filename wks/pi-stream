@@ -1,0 +1,34 @@
+#!/bin/bash	
+
+# this script runs on a linux workstation. It receives and saves the video streams from multiple 
+# raspberry Pi's with usb camera's attached. It does not do audio (yet). Intended for use as motion capture with IPIsoft analyser.
+#
+# the r.pi's (source end) have a systemd script that runs something like ...
+# /usr/bin/gst-launch-1.0 -e v4l2src device=/dev/video0 ! videoconvert ! clockoverlay font-desc='Sans, 20' ! omxh264enc ! h264parse !\
+#       queue max-size-bytes=${QUEUE} ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host=${GST_IP} port=${GST_PORT
+#
+# ver 1.0, 30Dec2020, andrewgray1965@gmail.com
+#
+# if you change the port number on the r.pi, you need to also change it here (port=4321) 
+
+SUBNET='192.168.1';					# first three quads of the IP number range you are using.
+LIST='121 122 123';					# last quad list of all the rasp pi streamers.
+FILEMAX=52428800; 					# 50 MBytes, roll files when we get to this size, upto 99 rolls
+AGEMAX=600000000000;				# 10 mins in nanoSec ... seriously? nanoSec? wtf! whats wrong with decimal points gstreamer devs ?
+
+DIR=`date +%s`;						  # pick some random date based name to stop files accidentally being overwritten.
+
+while true; do			
+	for IP in $LIST; do				# list of static rasp pi ip numbers running the sony camera.
+		mkdir -p ~/Videos/$DIR/$IP || exit;		# fail if we cant write to a dir
+		if [[ `ps auwx | grep gst-launch | grep -w host=${SUBNET}.${IP} | grep -v grep` == '' ]]; then		# test it's not already running
+
+			gst-launch-1.0 tcpclientsrc host=${SUBNET}.${IP} port=4321  ! gdpdepay !  rtph264depay ! h264parse ! tee name=t \
+				t. ! queue ! splitmuxsink location=~/Videos/$DIR/$IP/video_%02d.mp4 max-size-bytes=${FILEMAX} max-size-time=${AGEMAX} muxer=mp4mux -e \
+				t. ! queue leaky=1 ! decodebin ! videoconvert ! autovideosink sync=false &
+
+		fi;
+	done;
+	sleep 5;
+done;
+exit;	# stop here.
